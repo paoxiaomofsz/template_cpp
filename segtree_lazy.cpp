@@ -1,0 +1,96 @@
+#define int long long 
+#define ls u << 1
+#define rs u << 1 | 1
+struct SegTree{
+    
+    struct Node{
+        // to do
+        
+    };
+    
+    vector<int> w;
+    vector<Node> tr;
+    SegTree(int n) :tr(n * 4 + 1), w(n + 1){}
+    void pushdown(Node& u, Node& l, Node& r){
+        // to do
+        if(u.add)
+        {
+            eval(l, add);
+            eval(r, add);
+            u.add = 0;
+        }
+    }
+    void pushup(Node& u, Node& l, Node& r){
+        // to do
+        
+    }
+    void pushup(int u){
+        pushup(tr[u], tr[ls], tr[rs]);
+    }
+    void pushdown(int u){
+        pushdown(tr[u], tr[ls], tr[rs]);
+    }
+    void build(int u, int l, int r){
+        tr[u] = {l, r};
+        if(l == r)
+        {
+            // to do 
+            
+            return;
+        }
+        int mid = l + r >> 1;
+        build(ls, l, mid);
+        build(rs, mid + 1, r);
+        pushup(u);
+    }
+    
+    void eval(Node& t, int add, int mul){
+        // to do
+        // t.sum = (t.sum * mul + (t.r - t.l + 1) * add) % p;
+        // t.mul = t.mul * mul % p;
+        // t.add = (t.add * mul + add) % p;
+    }
+    
+    void modify(int u, int idx, int val){ // 单点修改
+        if(tr[u].l == tr[u].r && tr[u].l == idx)
+        {
+            // to do 
+            
+            return;
+        }
+        int mid = tr[u].l + tr[u].r >> 1;
+        if(idx <= mid) modify(ls, idx, val);
+        else
+            modify(rs, idx, val);
+        pushup(u);
+    }
+    void modify(int u, int L, int R, int val) // 区间修改
+    {
+        if(tr[u].l >= L && tr[u].r <= R)
+        {
+            // to do
+            // eval(tr[u], val);
+            return;
+        }
+        pushdown(u);
+        int mid = tr[u].l + tr[u].r >> 1;
+        if(L <= mid) modify(ls, L, R, val);
+        if(R > mid) modify(rs, L, R, val);
+        pushup(u);
+        
+    }
+    Node query(int u, int L, int R){
+        if(tr[u].l >= L && tr[u].r <= R)
+            return tr[u];
+        pushdown(u);
+        int mid = tr[u].l + tr[u].r >> 1;
+        if(R <= mid) return query(ls, L, R);
+        else if (L > mid) return query(rs, L, R);
+        else
+        {
+            // to do
+            
+        }
+    }
+   
+};
