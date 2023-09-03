@@ -1,0 +1,32 @@
+struct M
+{
+    int m[105][105];
+    inline void init()
+    {
+        memset(m, 0, sizeof(m));
+    }
+    inline M operator*(const M &o) const
+    {
+        M p;
+        p.init();
+        for (int k = 1; k <= q; ++k)
+            for (int i = 1; i <= q; ++i)
+                for (int j = 1; j <= q; ++j)
+                    p.m[i][j] = (p.m[i][j] + 1ll * m[i][k] * o.m[k][j] % mod) % mod;
+        return p;
+    }
+} a, b;
+inline M qpow(M x, ll y)
+{
+    M p;
+    for (int i = 1; i <= q; ++i)
+        p.m[i][i] = 1;
+    while (y)
+    {
+        if (y & 1)
+            p = p * x;
+        y >>= 1;
+        x = x * x;
+    }
+    return p;
+}
